@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { updateDoc, doc } from 'firebase/firestore';
+import { useState } from 'react';
+import { ref, set, get } from 'firebase/database';
 import { db } from '../config/firebaseConfig';
 import firebase from 'firebase/compat/app';
 
@@ -12,10 +12,20 @@ const AdventureSetting: React.FC<{ user: firebase.User }> = ({ user }) => {
 
   const handleSaveAdventureSetting = async () => {
     try {
-      // Save the adventure setting to the user's document in the database
-      await updateDoc(doc(db, 'users', user.uid), {
-        adventureSetting: adventureSetting,
-      });
+      // Retrieve the user's data from the database
+      const dbRef = ref(db, `users/${user.uid}`);
+      const snapshot = await get(dbRef);
+      const userData = snapshot.val();
+  
+      // Update the adventure setting in the user's data
+      const updatedUserData = {
+        ...userData,
+        adventureSetting: adventureSetting
+      };
+  
+      // Save the updated data back to the database
+      await set(dbRef, updatedUserData);
+  
       console.log('Adventure setting saved');
     } catch (error: any) {
       console.error(error.message);
