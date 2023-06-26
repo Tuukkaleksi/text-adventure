@@ -12,8 +12,10 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
+      setTimeout(() => {
+        setUser(currentUser);
+        setLoading(false);
+      }, 5000); //5 seconds just to test it
     });
 
     return () => unsubscribe();
