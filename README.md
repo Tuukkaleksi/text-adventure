@@ -6,7 +6,10 @@
     - Frontend
     - Chatroom
     - Actual Gameplay
-    - Users add their own API Key BUT it gets removed after leaving the site/logout
 
+### Updates
+    - Frontend: Sign In/Out, Adventure Setting
+    - Users can now add their Adventure Setting and OpenAI Api Key
+    - OpenAI Api Key gets removed from the database after logout
 
 #### Made With Vite Typescript React App
