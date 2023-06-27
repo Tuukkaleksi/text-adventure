@@ -3,40 +3,66 @@ import './App.css';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import AdventureSetting from './components/AdventureSetting';
+import ChatRoom from './components/ChatRoom';
 import firebase from 'firebase/app';
 import { auth, db } from './config/firebaseConfig';
 import { signOut } from 'firebase/auth';
-import { update, ref } from 'firebase/database';
+import { update, ref, get } from 'firebase/database';
 
 const App: React.FC = () => {
   const [user, setUser] = useState<firebase.User | null>(null);
   const [loading, setLoading] = useState(true);
   const [showSignup, setShowSignup] = useState(false);
+  const [adventureSetting, setAdventureSetting] = useState('');
+  const [apiKey, setApiKey] = useState('');
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       setTimeout(() => {
         setUser(currentUser);
         setLoading(false);
-      }, 10000); // 5 seconds just to test it
+      }, 1000); // 5 seconds just to test it
     });
 
     return () => unsubscribe();
   }, []);
 
+  useEffect(() => {
+    if (user) {
+      const fetchUserData = async () => {
+        try {
+          const dbRef = ref(db, `users/${user.uid}`);
+          const snapshot = await get(dbRef);
+          const userData = snapshot.val();
+  
+          if (userData) {
+            setAdventureSetting(userData.adventureSetting);
+            setApiKey(userData.apiKey);
+          }
+        } catch (error: any) {
+          console.error(error.message);
+        }
+      };
+
+      fetchUserData();
+    }
+  }, [user]);
+
   const handleLogout = async () => {
     try {
-      // Remove the apiKey from the user's data in the database
-      const dbRef = ref(db, `users/${user?.uid}`);
-      await update(dbRef, { apiKey: null });
-      
+      if (user) {
+        // Remove the apiKey from the user's data in the database
+        const dbRef = ref(db, `users/${user.uid}`);
+        await update(dbRef, { apiKey: null });
+      }
+  
       await signOut(auth);
       setUser(null);
       console.log('handleLogout');
     } catch (error: any) {
       console.error(error.message);
     }
-  };
+  };  
 
   if (loading) {
     // Show a loading indicator while user data is being loaded
@@ -52,8 +78,11 @@ const App: React.FC = () => {
     <div>
       {user ? (
         <>
-          <button className="logout-button" onClick={handleLogout}>Logout</button>
-          <AdventureSetting user={user} />
+          {adventureSetting && apiKey ? (
+            <ChatRoom user={user} handleLogout={handleLogout} />
+          ) : (
+            <AdventureSetting user={user} setAdventureSetting={setAdventureSetting} setApiKey={setApiKey} />
+          )}
         </>
       ) : (
         <>

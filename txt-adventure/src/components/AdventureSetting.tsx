@@ -1,41 +1,46 @@
-import { useState } from 'react';
-import { ref, set, get } from 'firebase/database';
-import { db } from '../config/firebaseConfig';
+import React, { useState } from 'react';
+import { ref, set, get, getDatabase } from 'firebase/database';
 import firebase from 'firebase/compat/app';
 import '../assets/Adventure.css';
 
-const AdventureSetting: React.FC<{ user: firebase.User }> = ({ user }) => {
-  const [adventureSetting, setAdventureSetting] = useState('');
-  const [apiKey, setApiKey] = useState('');
+interface AdventureSettingProps {
+  user: firebase.User;
+  setAdventureSetting: React.Dispatch<React.SetStateAction<string>>;
+  setApiKey: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const AdventureSetting: React.FC<AdventureSettingProps> = ({ user, setAdventureSetting, setApiKey }) => {
+  const [adventureSetting, setLocalAdventureSetting] = useState('');
+  const [apiKey, setLocalApiKey] = useState('');
 
   const handleAdventureSettingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAdventureSetting(e.target.value);
+    setLocalAdventureSetting(e.target.value);
   };
 
   const handleApiKeyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setApiKey(e.target.value);
+    setLocalApiKey(e.target.value);
   };
 
   const handleSaveAdventureSetting = async () => {
     try {
-      // Retrieve the user's data from the database
-      const dbRef = ref(db, `users/${user.uid}`);
+      const dbRef = ref(getDatabase(), `users/${user.uid}`);
       const snapshot = await get(dbRef);
       const userData = snapshot.val();
-  
-      // Update the adventure setting in the user's data
+
       const updatedUserData = {
         ...userData,
         adventureSetting: adventureSetting,
-        apiKey: apiKey
+        apiKey: apiKey,
       };
-  
-      // Save the updated data back to the database
+
       await set(dbRef, updatedUserData);
-  
+
+      setAdventureSetting(adventureSetting);
+      setApiKey(apiKey);
+
       console.log('Adventure setting and API key saved');
-    } catch (error: any) {
-      console.error(error.message);
+    } catch (error) {
+      console.error('Error saving adventure setting and API key:', error);
     }
   };
 
@@ -53,13 +58,10 @@ const AdventureSetting: React.FC<{ user: firebase.User }> = ({ user }) => {
         <br />
         Don't know how? Click here <a href="#">GUIDE</a>
       </p>
-      <input
-        type="text"
-        placeholder="OpenAI API Key"
-        value={apiKey}
-        onChange={handleApiKeyChange}
-      />
-      <button className="adventure-button" onClick={handleSaveAdventureSetting}>Save</button>
+      <input type="text" placeholder="OpenAI API Key" value={apiKey} onChange={handleApiKeyChange} />
+      <button className="adventure-button" onClick={handleSaveAdventureSetting}>
+        Save
+      </button>
     </div>
   );
 };
