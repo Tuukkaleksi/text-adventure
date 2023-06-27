@@ -42,6 +42,7 @@ const AdventureSetting: React.FC<{ user: firebase.User }> = ({ user }) => {
         onChange={handleAdventureSettingChange}
       />
       <button onClick={handleSaveAdventureSetting}>Save</button>
+      <h3>Current Setting: {adventureSetting}</h3>
     </div>
   );
 };

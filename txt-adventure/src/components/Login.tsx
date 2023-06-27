@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../config/firebaseConfig';
+import '../assets/Login.css'; // Import the CSS file for styling
 
-const Login: React.FC = () => {
+interface LoginProps {
+  setShowSignup: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Login: React.FC<LoginProps> = ({ setShowSignup }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -16,7 +21,7 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="login-container">
       <h2>Login</h2>
       <input
         type="email"
@@ -31,6 +36,10 @@ const Login: React.FC = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <button onClick={handleLogin}>Login</button>
+      <div className="signup-link">
+        Don't have an account?{' '}
+        <span onClick={() => setShowSignup(true)}>Signup</span>
+      </div>
     </div>
   );
 };

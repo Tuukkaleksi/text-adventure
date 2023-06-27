@@ -9,13 +9,14 @@ import { signOut } from 'firebase/auth';
 const App: React.FC = () => {
   const [user, setUser] = useState<firebase.User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showSignup, setShowSignup] = useState(false);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       setTimeout(() => {
         setUser(currentUser);
         setLoading(false);
-      }, 5000); //5 seconds just to test it
+      }, 1000); // 5 seconds just to test it
     });
 
     return () => unsubscribe();
@@ -25,7 +26,7 @@ const App: React.FC = () => {
     try {
       await signOut(auth);
       setUser(null);
-      console.log("handleLogout")
+      console.log('handleLogout');
     } catch (error: any) {
       console.error(error.message);
     }
@@ -45,8 +46,8 @@ const App: React.FC = () => {
         </>
       ) : (
         <>
-          <Login />
-          <Signup />
+          {!showSignup && <Login setShowSignup={setShowSignup} />} {/* Render Login by default */}
+          {showSignup && <Signup setShowSignup={setShowSignup} />} {/* Render Signup when showSignup is true */}
         </>
       )}
     </div>

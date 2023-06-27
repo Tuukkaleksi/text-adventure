@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../config/firebaseConfig';
 import { getDatabase, ref, set } from 'firebase/database';
+import '../assets/Signup.css';
 
-const Signup: React.FC = () => {
+interface SignupProps {
+  setShowSignup: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Signup: React.FC<SignupProps> = ({ setShowSignup }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -22,7 +27,7 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="signup-container">
       <h2>Signup</h2>
       <input
         type="email"
@@ -37,6 +42,10 @@ const Signup: React.FC = () => {
         onChange={(e) => setPassword(e.target.value)}
       />
       <button onClick={handleSignup}>Signup</button>
+      <div className="login-link">
+        Already have an account?{' '}
+        <span onClick={() => setShowSignup(false)}>Login</span>
+      </div>
     </div>
   );
 };
