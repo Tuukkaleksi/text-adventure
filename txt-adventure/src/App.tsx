@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import firebase from 'firebase/app';
-import { auth } from './config/firebaseConfig';
+import './App.css';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import AdventureSetting from './components/AdventureSetting';
+import firebase from 'firebase/app';
+import { auth, db } from './config/firebaseConfig';
 import { signOut } from 'firebase/auth';
+import { update, ref } from 'firebase/database';
 
 const App: React.FC = () => {
   const [user, setUser] = useState<firebase.User | null>(null);
@@ -16,7 +18,7 @@ const App: React.FC = () => {
       setTimeout(() => {
         setUser(currentUser);
         setLoading(false);
-      }, 1000); // 5 seconds just to test it
+      }, 10000); // 5 seconds just to test it
     });
 
     return () => unsubscribe();
@@ -24,6 +26,10 @@ const App: React.FC = () => {
 
   const handleLogout = async () => {
     try {
+      // Remove the apiKey from the user's data in the database
+      const dbRef = ref(db, `users/${user?.uid}`);
+      await update(dbRef, { apiKey: null });
+      
       await signOut(auth);
       setUser(null);
       console.log('handleLogout');
@@ -34,14 +40,19 @@ const App: React.FC = () => {
 
   if (loading) {
     // Show a loading indicator while user data is being loaded
-    return <div>Loading...</div>;
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <h2 className="loading-description">Loading...</h2>
+      </div>
+    );
   }
 
   return (
     <div>
       {user ? (
         <>
-          <button onClick={handleLogout}>Logout</button>
+          <button className="logout-button" onClick={handleLogout}>Logout</button>
           <AdventureSetting user={user} />
         </>
       ) : (

@@ -22,7 +22,7 @@ const Login: React.FC<LoginProps> = ({ setShowSignup }) => {
 
   return (
     <div className="login-container">
-      <h2>Login</h2>
+      <h2>Sign In</h2>
       <input
         type="email"
         placeholder="Email"
@@ -35,10 +35,10 @@ const Login: React.FC<LoginProps> = ({ setShowSignup }) => {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={handleLogin}>Login</button>
+      <button onClick={handleLogin}>Sign In</button>
       <div className="signup-link">
         Don't have an account?{' '}
-        <span onClick={() => setShowSignup(true)}>Signup</span>
+        <span onClick={() => setShowSignup(true)}>Sign Up</span>
       </div>
     </div>
   );
