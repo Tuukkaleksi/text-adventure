@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
+
 import './App.css';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import AdventureSetting from './components/AdventureSetting';
 import ChatRoom from './components/ChatRoom';
-import firebase from 'firebase/app';
-import { auth, db } from './config/firebaseConfig';
+
+import { db, auth } from './config/firebaseConfig';
+import { get, getDatabase, ref, update } from 'firebase/database';
 import { signOut } from 'firebase/auth';
-import { getDatabase, update, ref, get } from 'firebase/database';
+import { User } from 'firebase/auth';
 
 const App: React.FC = () => {
-  const [user, setUser] = useState<firebase.User | null>(null);
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [showSignup, setShowSignup] = useState(false);
   const [adventureSetting, setAdventureSetting] = useState('');

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { ref, set, get, getDatabase } from 'firebase/database';
-import firebase from 'firebase/compat/app';
+import { User } from 'firebase/auth';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import '../assets/Adventure.css';
 
 interface AdventureSettingProps {
-  user: firebase.User;
+  user: User;
   setAdventureSetting: React.Dispatch<React.SetStateAction<string>>;
   setApiKey: React.Dispatch<React.SetStateAction<string>>;
   handleLogout: () => void;
