@@ -1,7 +1,13 @@
 {
   "name": "txt-adventure",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
+  "description": "Text Adventure with OpenAI",
+  "author": {
+    "name": "Tuukka Pitkanen",
+    "email": "janialeksi22@gmail.com",
+    "url": "http://localhost:5173/"
+  },
   "type": "module",
   "scripts": {
     "dev": "vite",
