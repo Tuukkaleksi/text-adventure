@@ -27,3 +27,5 @@
     - Made this so it cant be vulnerable.
 
 #### Made With Vite Typescript React App
+    - Made this project for my Portfolio
+    - Hopefully employers see this as PLUS
