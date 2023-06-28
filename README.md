@@ -1,4 +1,8 @@
 # Text Adventure With OpenAIAPI
+
+## Website
+    - Coming when its playable
+
 ## Login and Signup
     - To save your progress
     - idk actually lol
