@@ -81,7 +81,7 @@ const App: React.FC = () => {
           {adventureSetting && apiKey ? (
             <ChatRoom user={user} handleLogout={handleLogout} />
           ) : (
-            <AdventureSetting user={user} setAdventureSetting={setAdventureSetting} setApiKey={setApiKey} />
+            <AdventureSetting user={user} setAdventureSetting={setAdventureSetting} setApiKey={setApiKey} handleLogout={handleLogout} />
           )}
         </>
       ) : (

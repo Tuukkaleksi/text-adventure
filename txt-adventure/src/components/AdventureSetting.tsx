@@ -1,17 +1,25 @@
 import React, { useState } from 'react';
 import { ref, set, get, getDatabase } from 'firebase/database';
 import firebase from 'firebase/compat/app';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSignOutAlt, faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 import '../assets/Adventure.css';
 
 interface AdventureSettingProps {
   user: firebase.User;
   setAdventureSetting: React.Dispatch<React.SetStateAction<string>>;
   setApiKey: React.Dispatch<React.SetStateAction<string>>;
+  handleLogout: () => void;
 }
 
-const AdventureSetting: React.FC<AdventureSettingProps> = ({ user, setAdventureSetting, setApiKey }) => {
+const AdventureSetting: React.FC<AdventureSettingProps> = ({ user, setAdventureSetting, setApiKey, handleLogout }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [adventureSetting, setLocalAdventureSetting] = useState('');
   const [apiKey, setLocalApiKey] = useState('');
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prevState) => !prevState);
+  };
 
   const handleAdventureSettingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLocalAdventureSetting(e.target.value);
@@ -49,6 +57,17 @@ const AdventureSetting: React.FC<AdventureSettingProps> = ({ user, setAdventureS
 
   return (
     <div className="adventure-container">
+      <div className={`side-menu ${isSidebarOpen ? 'open' : ''}`}>
+        <button className="sidebar-toggle" onClick={toggleSidebar}>
+          <FontAwesomeIcon icon={faEllipsisV} />
+        </button>
+        <div className="sidebar-content">
+          <button className="sidebar-button" onClick={handleLogout} title="Sign Out">
+            <FontAwesomeIcon icon={faSignOutAlt} />
+            <span className="tooltip">Sign Out</span>
+          </button>
+        </div>
+      </div>
       <h2 className="adventure-title">Adventure Setting</h2>
       <input
         type="text"
@@ -59,7 +78,7 @@ const AdventureSetting: React.FC<AdventureSettingProps> = ({ user, setAdventureS
       <p className="api-key-info">
         You need to add your own OpenAI API Key
         <br />
-        Don't know how? Click here <a href="#">GUIDE</a>
+        Don't know how? Click here <a href="https://help.openai.com/en/articles/4936850-where-do-i-find-my-secret-api-key" target='_blank'>GUIDE</a>
       </p>
       <input type="text" placeholder="OpenAI API Key" value={apiKey} onChange={handleApiKeyChange} />
       <button className="adventure-button" onClick={handleSaveAdventureSetting}>

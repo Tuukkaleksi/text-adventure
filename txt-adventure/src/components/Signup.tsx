@@ -11,9 +11,33 @@ interface SignupProps {
 const Signup: React.FC<SignupProps> = ({ setShowSignup }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+    setEmailError(''); // Clear the email error when the user starts typing
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+    setPasswordError(''); // Clear the password error when the user starts typing
+  };
 
   const handleSignup = async () => {
     try {
+      // Email check
+      if (email === '') {
+        setEmailError('Please enter an email address.');
+        return;
+      }
+
+      // Password check
+      if (!/(?=.*\d)(?=.*[!@#$%^&*])/.test(password)) {
+        setPasswordError('Password should contain at least one number and one special character.');
+        return;
+      }
+
       const { user } = await createUserWithEmailAndPassword(auth, email, password);
       console.log('User created');
 
@@ -33,14 +57,16 @@ const Signup: React.FC<SignupProps> = ({ setShowSignup }) => {
         type="email"
         placeholder="Email"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={handleEmailChange}
       />
       <input
         type="password"
         placeholder="Password"
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={handlePasswordChange}
       />
+      {emailError && <div className="error-message">{emailError}</div>}
+      {passwordError && <div className="error-message">{passwordError}</div>}
       <button onClick={handleSignup}>Sign Up</button>
       <div className="login-link">
         Already have an account?{' '}

@@ -10,13 +10,37 @@ interface LoginProps {
 const Login: React.FC<LoginProps> = ({ setShowSignup }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+    setError(''); // Clear the error when the user starts typing
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+    setError(''); // Clear the error when the user starts typing
+  };
 
   const handleLogin = async () => {
     try {
+
+    // Email and password validation
+    if (!email) {
+      setError('Please enter your email.');
+      return;
+    }
+
+    if (!password) {
+      setError('Please enter your password.');
+      return;
+    }
+
       await signInWithEmailAndPassword(auth, email, password);
       console.log('User found');
     } catch (error: any) {
       console.error(error.message);
+      setError('Invalid email or password.');
     }
   };
 
@@ -27,14 +51,15 @@ const Login: React.FC<LoginProps> = ({ setShowSignup }) => {
         type="email"
         placeholder="Email"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={handleEmailChange}
       />
       <input
         type="password"
         placeholder="Password"
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={handlePasswordChange}
       />
+      {error && <div className="error-message">{error}</div>} {/* Render the error message */}
       <button onClick={handleLogin}>Sign In</button>
       <div className="signup-link">
         Don't have an account?{' '}

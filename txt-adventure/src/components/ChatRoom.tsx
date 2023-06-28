@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt, faMusic, faLightbulb, faEllipsisV, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { generateAIResponse } from './OpenAIHandler'; // Import the OpenAI handler function
 import { getDatabase, ref, get } from 'firebase/database';
+import firebase from 'firebase/compat/app';
 
 interface ChatRoomProps {
   user: firebase.User;
@@ -96,7 +97,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ user, handleLogout }) => {
       const newMessage: Message = {
         id: Math.random().toString(),
         content: inputMessage,
-        sender: user.email,
+        sender: user.email ?? '',
       };
       setMessages((prevMessages) => [...prevMessages, newMessage]);
       setInputMessage('');

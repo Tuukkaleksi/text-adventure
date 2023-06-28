@@ -51,3 +51,10 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+.error-message {
+  cursor: default;
+  color: rgb(192, 4, 4);
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
