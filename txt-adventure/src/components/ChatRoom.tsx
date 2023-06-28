@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../assets/ChatRoom.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignOutAlt, faMusic, faLightbulb, faEllipsisV, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
@@ -22,6 +22,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ user, handleLogout }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [adventureSetting, setAdventureSetting] = useState('');
   const [apiKey, setApiKey] = useState('');
+  const previousAiResponseRef = useRef('');
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prevState) => !prevState);
@@ -59,19 +60,36 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ user, handleLogout }) => {
       const initialPrompt = `You are in ${adventureSetting}. What would you like to do?`;
       generateAIResponse(initialPrompt, apiKey)
         .then((response) => {
-          const aiMessage: Message = {
-            id: Math.random().toString(),
-            content: response,
-            sender: 'AI',
-          };
-          setMessages((prevMessages) => [...prevMessages, aiMessage]);
+          // Check if the AI response is the same as the previous one
+          if (response === previousAiResponseRef.current) {
+            // Generate a new response if it's the same
+            generateAIResponse(initialPrompt, apiKey)
+              .then((newResponse) => {
+                handleAiResponse(newResponse);
+              })
+              .catch((error) => {
+                console.error('Error generating AI response:', error);
+              });
+          } else {
+            handleAiResponse(response);
+          }
         })
         .catch((error) => {
           console.error('Error generating AI response:', error);
         });
-        console.log(apiKey);
     }
   }, [adventureSetting, apiKey]);
+
+  const handleAiResponse = (response: string) => {
+    const aiMessage: Message = {
+      id: Math.random().toString(),
+      content: response,
+      sender: 'AI',
+    };
+
+    setMessages((prevMessages) => [...prevMessages, aiMessage]);
+    previousAiResponseRef.current = response;
+  };
 
   const sendMessage = () => {
     if (inputMessage.trim() !== '') {
@@ -86,12 +104,24 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ user, handleLogout }) => {
       const prompt = `You are in ${adventureSetting}. ${inputMessage}`;
       generateAIResponse(prompt, apiKey)
         .then((response) => {
-          const aiMessage: Message = {
+          handleAiResponse(response);
+
+          // Generate a fitting question based on the AI response
+          let question = '';
+
+          // Check the adventure setting or the content of the response
+          if (adventureSetting === `${adventureSetting}`) {
+            //question = 'What is your next move in Gotham?';
+            question = 'What would you like to do next?';
+          }
+
+          const questionMessage: Message = {
             id: Math.random().toString(),
-            content: response,
+            content: question,
             sender: 'AI',
           };
-          setMessages((prevMessages) => [...prevMessages, aiMessage]);
+
+          setMessages((prevMessages) => [...prevMessages, questionMessage]);
         })
         .catch((error) => {
           console.error('Error generating AI response:', error);

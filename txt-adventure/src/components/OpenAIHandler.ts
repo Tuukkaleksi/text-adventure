@@ -5,7 +5,7 @@ export const generateAIResponse = async (prompt: string, apiKey: string): Promis
     const response = await axios.post(
       'https://api.openai.com/v1/engines/davinci/completions',
       {
-        prompt: prompt,
+        prompt: `${prompt}`,
         max_tokens: 150, // Adjust the desired length of the AI response
         temperature: 0.7, // Adjust the temperature for controlling the randomness of the response
         top_p: 1, // Adjust the top-p (nucleus) sampling for better response quality
