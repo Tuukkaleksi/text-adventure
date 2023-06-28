@@ -8,12 +8,31 @@ interface ChatRoomProps {
   handleLogout: () => void;
 }
 
+interface Message {
+  id: string;
+  content: string;
+  sender: string;
+}
+
 const ChatRoom: React.FC<ChatRoomProps> = ({ user, handleLogout }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [inputMessage, setInputMessage] = useState('');
+  const [messages, setMessages] = useState<Message[]>([]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prevState) => !prevState);
+  };
+
+  const sendMessage = () => {
+    if (inputMessage.trim() !== '') {
+      const newMessage: Message = {
+        id: Math.random().toString(),
+        content: inputMessage,
+        sender: user.email,
+      };
+      setMessages((prevMessages) => [...prevMessages, newMessage]);
+      setInputMessage('');
+    }
   };
 
   return (
@@ -42,6 +61,14 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ user, handleLogout }) => {
         <p className="user-email">User: {user.email}</p>
         <p className="user-email">Adventure: {user.AdventureSetting}</p>
         <div className="chat-area">
+          {messages.map((message) => (
+            <div
+              className={`message ${message.sender === user.email ? 'user-message' : 'ai-message'}`}
+              key={message.id}
+            >
+              <span className="message-content">{message.content}</span>
+            </div>
+          ))}
         </div>
         <div className="input-area">
           <input
@@ -51,7 +78,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ user, handleLogout }) => {
             value={inputMessage}
             onChange={(e) => setInputMessage(e.target.value)}
           />
-          <button className="send-button">
+          <button className="send-button" onClick={sendMessage}>
             <FontAwesomeIcon icon={faPaperPlane} />
           </button>
         </div>

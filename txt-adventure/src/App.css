@@ -1,3 +1,24 @@
+/* Add custom scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px; /* Adjust the width as desired */
+}
+
+/* Customize scrollbar track */
+::-webkit-scrollbar-track {
+  background-color: rgba(10, 14, 14, 0.3);
+}
+
+/* Customize scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  background-color: #a3a3a3;
+  border-radius: 4px;
+}
+
+/* Customize scrollbar thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(163, 163, 163, 0.8);
+}
+
 #root {
   max-width: 1280px;
   margin: 0 auto;

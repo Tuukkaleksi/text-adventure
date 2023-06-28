@@ -29,6 +29,7 @@ const AdventureSetting: React.FC<AdventureSettingProps> = ({ user, setAdventureS
 
       const updatedUserData = {
         ...userData,
+        email: user.email,
         adventureSetting: adventureSetting,
         apiKey: apiKey,
       };
