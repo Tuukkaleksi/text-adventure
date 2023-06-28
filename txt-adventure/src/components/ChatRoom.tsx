@@ -51,7 +51,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ user, handleLogout }) => {
     if (adventureSetting && apiKey) {
       const welcomeMessage: Message = {
         id: Math.random().toString(),
-        content: `Welcome to the Chat Room in ${adventureSetting}!`,
+        content: `Welcome! Adventure begins in ${adventureSetting}!`,
         sender: 'AI',
       };
       setMessages((prevMessages) => [...prevMessages, welcomeMessage]);
