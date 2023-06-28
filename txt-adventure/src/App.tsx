@@ -7,7 +7,7 @@ import ChatRoom from './components/ChatRoom';
 import firebase from 'firebase/app';
 import { auth, db } from './config/firebaseConfig';
 import { signOut } from 'firebase/auth';
-import { update, ref, get } from 'firebase/database';
+import { getDatabase, update, ref, get } from 'firebase/database';
 
 const App: React.FC = () => {
   const [user, setUser] = useState<firebase.User | null>(null);
@@ -52,7 +52,7 @@ const App: React.FC = () => {
     try {
       if (user) {
         // Remove the apiKey from the user's data in the database
-        const dbRef = ref(db, `users/${user.uid}`);
+        const dbRef = ref(getDatabase(), `users/${user.uid}/settings`);
         await update(dbRef, { apiKey: null });
       }
   
@@ -62,7 +62,7 @@ const App: React.FC = () => {
     } catch (error: any) {
       console.error(error.message);
     }
-  };  
+  };
 
   if (loading) {
     // Show a loading indicator while user data is being loaded

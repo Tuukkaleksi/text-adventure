@@ -30,8 +30,10 @@ const AdventureSetting: React.FC<AdventureSettingProps> = ({ user, setAdventureS
       const updatedUserData = {
         ...userData,
         email: user.email,
-        adventureSetting: adventureSetting,
-        apiKey: apiKey,
+        settings: {
+          adventureSetting: adventureSetting, // Setting for the Adventure
+          apiKey: apiKey, // User's own OpenAI API Key
+        },
       };
 
       await set(dbRef, updatedUserData);
