@@ -1,5 +1,6 @@
 .signup-container {
-  width: auto;
+  width: 400px;
+  height: 350px;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -10,7 +11,8 @@
   justify-content: center;
   text-align: center;
   padding: 20px;
-  background-color: #000;
+  background-color: #131313;
+  border-radius: 5px;
 }
   
 .signup-container h2 {
@@ -20,7 +22,7 @@
 }
   
 .signup-container  input {
-    width: 100%;
+    width: 300px;
     padding: 10px;
     margin-bottom: 10px;
     border: none;
@@ -53,4 +55,10 @@
     color: rgb(192, 4, 4);
     margin-top: 15px;
     margin-bottom: 15px;
+}
+
+@media only screen and (max-width: 600px) {
+    .signup-container {
+        width: 300px;
+    }
 }

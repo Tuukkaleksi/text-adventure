@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import './App.css';
+import './assets/images/white_flower.gif';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import AdventureSetting from './components/AdventureSetting';
@@ -77,7 +78,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <div>
+    <div className="background">
       {user ? (
         <>
           {adventureSetting && apiKey ? (

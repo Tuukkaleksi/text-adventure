@@ -1,3 +1,7 @@
+body {
+  background-color: rgb(8, 8, 8);
+}
+
 /* Add custom scrollbar styles */
 ::-webkit-scrollbar {
   width: 8px; /* Adjust the width as desired */
@@ -17,6 +21,14 @@
 /* Customize scrollbar thumb on hover */
 ::-webkit-scrollbar-thumb:hover {
   background-color: rgba(163, 163, 163, 0.8);
+}
+
+.background {
+  position: relative;
+  min-height: 90vh;
+  background: url('./assets/images/white_flower.gif') no-repeat center center fixed;
+  /* background: url('./assets/images/game_pixel.gif') no-repeat center center fixed; */
+  background-size: cover;
 }
 
 #root {
@@ -74,10 +86,11 @@
   justify-content: center;
   text-align: center;
   padding: 20px;
+  z-index: 9999;
 }
 
 .loading-container .loading-spinner {
-  border: 6px solid #000000;
+  border: 6px solid #a7a7a7;
   border-top: 6px solid #00ff9b;
   border-radius: 50%;
   width: 60px;
@@ -86,7 +99,7 @@
 }
 
 .loading-container .loading-description {
-  color: #000000;
+  color: #ffffff;
   font-size: 24px;
   margin-top: 20px;
 }

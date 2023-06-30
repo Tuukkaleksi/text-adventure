@@ -19,6 +19,7 @@ interface Message {
 
 const ChatRoom: React.FC<ChatRoomProps> = ({ user, handleLogout }) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [error, setError] = useState('');
   const [inputMessage, setInputMessage] = useState('');
   const [messages, setMessages] = useState<Message[]>([]);
   const [adventureSetting, setAdventureSetting] = useState('');
@@ -53,7 +54,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ user, handleLogout }) => {
     if (adventureSetting && apiKey) {
       const welcomeMessage: Message = {
         id: Math.random().toString(),
-        content: `Welcome! Adventure begins in ${adventureSetting}!`,
+        content: `Welcome! Adventure begins, ${adventureSetting}!`,
         sender: 'AI',
       };
       setMessages((prevMessages) => [...prevMessages, welcomeMessage]);
@@ -126,6 +127,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ user, handleLogout }) => {
         })
         .catch((error) => {
           console.error('Error generating AI response:', error);
+          setError('There was an Error! Are you sure API Key works?');
         });
     }
   };
@@ -152,9 +154,10 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ user, handleLogout }) => {
         </div>
       </div>
       <div className="chatroom-content">
-        <h2 className="welcome-message">Welcome to the Chat Room</h2>
-        <p className="user-email">User: {user.email}</p>
-        <p className="user-email">Adventure: {adventureSetting}</p>
+        <h2 className="welcome-message">Welcome To Your Adventure!</h2>
+        <p className="user-email">Current User: {user.email}</p>
+        <p className="user-email">Adventure Setting: {adventureSetting}</p>
+        {error && <div className="error-message">{error}</div>} {/* Render the error message */}
         <div className="chat-area">
           {messages.map((message) => (
             <div
