@@ -14,6 +14,27 @@
     background-color: #131313;
     border-radius: 5px;
   }
+
+  .adventure-container select {
+    width: 300px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 4px;
+    appearance: none;
+    background-color: #fff;
+    color: #000;
+  }
+  
+  .adventure-container select option {
+    background-color: #131313;
+    color: #fff;
+  }
+  
+  .adventure-container select:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #00ff9b;
+  }
   
   .adventure-title {
     color: #fff;

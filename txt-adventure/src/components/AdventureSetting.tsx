@@ -18,11 +18,21 @@ const AdventureSetting: React.FC<AdventureSettingProps> = ({ user, setAdventureS
   const [apiKey, setLocalApiKey] = useState('');
   const [error, setError] = useState('');
 
+  //List of places
+  const adventureOptions = [
+    'Hogwarts',
+    'Castle Black',
+    'Rivendell',
+    'Narnia',
+    'Atlantis'
+  ];
+  
+
   const toggleSidebar = () => {
     setIsSidebarOpen((prevState) => !prevState);
   };
 
-  const handleAdventureSettingChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAdventureSettingChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setLocalAdventureSetting(e.target.value);
     setError('');
   };
@@ -45,10 +55,19 @@ const AdventureSetting: React.FC<AdventureSettingProps> = ({ user, setAdventureS
           adventureSetting: adventureSetting, // Setting for the Adventure
           apiKey: apiKey, // User's own OpenAI API Key
         },
+        data: {
+          health: 10,
+          money: 10,
+          stats: {
+            hp: 10,
+            attack: 10,
+            defence: 10,
+          },
+        },
       };
 
       if(!adventureSetting) {
-        setError('Please enter Adventure Setting');
+        setError('Please Select Adventure Setting');
         return;
       }
       if(!apiKey) {
@@ -81,12 +100,12 @@ const AdventureSetting: React.FC<AdventureSettingProps> = ({ user, setAdventureS
         </div>
       </div>
       <h2 className="adventure-title">Adventure Setting</h2>
-      <input
-        type="text"
-        placeholder="Enter Adventure Setting"
-        value={adventureSetting}
-        onChange={handleAdventureSettingChange}
-      />
+      <select value={adventureSetting} onChange={handleAdventureSettingChange}>
+        <option value="">Select Adventure Setting</option>
+        {adventureOptions.map((option) => (
+          <option key={option} value={option}>{option}</option>
+        ))}
+      </select>
       <p className="api-key-info">
         You need to add your own OpenAI API Key
         <br />
