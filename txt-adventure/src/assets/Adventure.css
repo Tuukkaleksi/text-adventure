@@ -29,6 +29,7 @@
   .adventure-container select option {
     background-color: #131313;
     color: #fff;
+    font-size: 16px;
   }
   
   .adventure-container select:focus {

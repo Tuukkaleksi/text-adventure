@@ -6,7 +6,7 @@ export const generateAIResponse = async (prompt: string, apiKey: string): Promis
       'https://api.openai.com/v1/engines/davinci/completions',
       {
         prompt: `${prompt}`,
-        max_tokens: 150, // Adjust the desired length of the AI response
+        max_tokens: 200, // Adjust the desired length of the AI response
         temperature: 0.7, // Adjust the temperature for controlling the randomness of the response
         top_p: 1, // Adjust the top-p (nucleus) sampling for better response quality
         frequency_penalty: 0.2, // Adjust the frequency penalty for avoiding repetitive responses

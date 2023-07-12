@@ -54,12 +54,15 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ user, handleLogout }) => {
     if (adventureSetting && apiKey) {
       const welcomeMessage: Message = {
         id: Math.random().toString(),
-        content: `Welcome! Your Adventure Is Set In: ${adventureSetting}!`,
+        content: `Your Adventure Begins in ${adventureSetting}! Shall the Story Begin.`,
         sender: 'AI',
       };
       setMessages((prevMessages) => [...prevMessages, welcomeMessage]);
 
-      const initialPrompt = `You are in ${adventureSetting}. What would you like to do?`;
+      //const AIBehavior = `You need to act like a Dungeon Master, tell about what would happen and user can tell you what happens and you can continue the story from there, 
+      //if user hasn't answered or there isin't any text, Start the story as you are in ${adventureSetting}.`;
+
+      const initialPrompt = `You are in ${adventureSetting}.`;
       generateAIResponse(initialPrompt, apiKey)
         .then((response) => {
           // Check if the AI response is the same as the previous one

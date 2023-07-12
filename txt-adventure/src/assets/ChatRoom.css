@@ -166,9 +166,10 @@ body,
 
 @media only screen and (max-width: 600px) {
   .chat-area {
-    height: calc(80vh - 55px - 2em - .5em - 3em);
+    height: calc(60h - 55px - 2em - .5em - 3em);
   }
   .message {
     max-width: 65%;
+    color: #474747;
   }
 }

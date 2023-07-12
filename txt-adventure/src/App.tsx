@@ -81,12 +81,12 @@ const App: React.FC = () => {
     <div className="background">
       {user ? (
         <>
-          {adventureSetting && apiKey ? (
-            <ChatRoom user={user} handleLogout={handleLogout} />
-          ) : (
-            <AdventureSetting user={user} setAdventureSetting={setAdventureSetting} setApiKey={setApiKey} handleLogout={handleLogout} />
-          )}
-        </>
+        {adventureSetting && apiKey ? (
+          <ChatRoom user={user} handleLogout={handleLogout}  />
+        ) : (
+          <AdventureSetting user={user} setAdventureSetting={setAdventureSetting} setApiKey={setApiKey} handleLogout={handleLogout} />
+        )}
+      </>
       ) : (
         <>
           {!showSignup && <Login setShowSignup={setShowSignup} />} {/* Render Login by default */}
