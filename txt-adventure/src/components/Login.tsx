@@ -45,6 +45,7 @@ const Login: React.FC<LoginProps> = ({ setShowSignup }) => {
   };
 
   return (
+    <>
     <div className="login-container">
       <h2>Sign In</h2>
       <input
@@ -66,6 +67,10 @@ const Login: React.FC<LoginProps> = ({ setShowSignup }) => {
         <span onClick={() => setShowSignup(true)}>Sign Up</span>
       </div>
     </div>
+    <footer className="footer">
+      <p>© 2023. All rights reserved. | <a href="#">Terms of Service</a> | <a href="#">Privacy Policy</a> | <a href="#" target='_blank'>GitHub</a></p>
+    </footer>
+    </>
   );
 };
 

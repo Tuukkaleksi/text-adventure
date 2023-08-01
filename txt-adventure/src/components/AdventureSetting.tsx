@@ -105,7 +105,7 @@ const AdventureSetting: React.FC<AdventureSettingProps> = ({ user, setAdventureS
         <br />
         Don't know how? Click here <a href="https://help.openai.com/en/articles/4936850-where-do-i-find-my-secret-api-key" target='_blank'>GUIDE</a>
       </p>
-      <input type="text" placeholder="OpenAI API Key" value={apiKey} onChange={handleApiKeyChange} />
+      <input type="text" min={32} placeholder="OpenAI API Key" value={apiKey} onChange={handleApiKeyChange} />
       {error && <div className="error-message">{error}</div>} {/* Render the error message */}
       <button className="adventure-button" onClick={handleSaveAdventureSetting}>
         Save
