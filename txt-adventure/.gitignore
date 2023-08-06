@@ -24,5 +24,4 @@ dist-ssr
 *.sw?
 
 # Private
-firebaseConfig.ts
 openaiConfig.ts
