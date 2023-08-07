@@ -68,7 +68,7 @@ const Login: React.FC<LoginProps> = ({ setShowSignup }) => {
       </div>
     </div>
     <footer className="footer">
-      <p>© 2023. All rights reserved. | <a href="#">Terms of Service</a> | <a href="#">Privacy Policy</a> | <a href="#" target='_blank'>GitHub</a></p>
+      <p>© 2023. All rights reserved. | <a href="#">Terms of Servic</a> | <a href="#">Privacy Policy</a> | <a href="#" target='_blank'>GitHub</a></p>
     </footer>
     </>
   );
