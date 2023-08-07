@@ -44,7 +44,12 @@ const Signup: React.FC<SignupProps> = ({ setShowSignup }) => {
       // Create a database entry for the user
       const db = getDatabase();
       const userRef = ref(db, `users/${user.uid}`);
-      set(userRef, { email: email, data: 'test' }); // Change the data value as needed
+      set(userRef, {
+        email: email,
+        data: {
+          placeholder: 'placeholder',
+        },
+      });
     } catch (error: any) {
       console.error(error.message);
     }
@@ -75,7 +80,7 @@ const Signup: React.FC<SignupProps> = ({ setShowSignup }) => {
       </div>
     </div>
     <footer className="footer">
-      <p>© 2023. All rights reserved. | <a href="#">Terms of Service</a> | <a href="#">Privacy Policy</a> | <a href="#" target='_blank'>GitHub</a></p>
+      <p>© 2023. All rights reserved. | <a href="https://github.com/Tuukkaleksi/text-adventure" target='_blank'>GitHub</a></p>
     </footer>
     </>
   );

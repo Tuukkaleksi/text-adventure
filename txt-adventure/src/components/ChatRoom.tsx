@@ -59,10 +59,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ user, handleLogout }) => {
       };
       setMessages((prevMessages) => [...prevMessages, welcomeMessage]);
 
-      //const AIBehavior = `You need to act like a Dungeon Master, tell about what would happen and user can tell you what happens and you can continue the story from there, 
-      //if user hasn't answered or there isin't any text, Start the story as you are in ${adventureSetting}.`;
-
-      const initialPrompt = `You are in ${adventureSetting}.`;
+      const initialPrompt = `You are in ${adventureSetting}. Your task is to craft an engaging story while staying within the confines of this setting. Ensure that you do not deviate from the topic and maintain the focus on ${adventureSetting}. Let your imagination run wild as you weave a captivating tale.`;
       generateAIResponse(initialPrompt, apiKey)
         .then((response) => {
           // Check if the AI response is the same as the previous one

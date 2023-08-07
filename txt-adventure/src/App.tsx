@@ -6,6 +6,7 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import AdventureSetting from './components/AdventureSetting';
 import ChatRoom from './components/ChatRoom';
+import Popup from './components/PopUp';
 
 import { db, auth } from './config/firebaseConfig';
 import { get, getDatabase, ref, update } from 'firebase/database';
@@ -16,8 +17,13 @@ const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [showSignup, setShowSignup] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [adventureSetting, setAdventureSetting] = useState('');
   const [apiKey, setApiKey] = useState('');
+
+  useEffect(() => {
+    setIsPopupOpen(true);
+  }, []);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
@@ -80,15 +86,20 @@ const App: React.FC = () => {
   return (
     <div className="background">
       {user ? (
-        <>
+      <>
         {adventureSetting && apiKey ? (
-          <ChatRoom user={user} handleLogout={handleLogout}  />
+          <>
+            <ChatRoom user={user} handleLogout={handleLogout}  />
+          </>
         ) : (
           <AdventureSetting user={user} setAdventureSetting={setAdventureSetting} setApiKey={setApiKey} handleLogout={handleLogout} />
         )}
       </>
       ) : (
         <>
+          <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)}>
+            {/* Popup content */}
+          </Popup>
           {!showSignup && <Login setShowSignup={setShowSignup} />} {/* Render Login by default */}
           {showSignup && <Signup setShowSignup={setShowSignup} />} {/* Render Signup when showSignup is true */}
         </>
