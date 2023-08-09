@@ -37,7 +37,7 @@ const Popup: React.FC<PopupProps> = ({ isOpen, onClose }) => {
                 <b>3. Sharing of Your Information</b><br></br>
                 We may share your information with third-party service providers who assist us in operating our Website or providing our services.<br></br>
                 <b>4. Your Choices</b><br></br>
-                You may have the right to access, correct, or delete your personal information by contacting us at tuksu090@hotmail.com.<br></br>
+                You may have the right to access, correct, or delete your personal information by contacting me at tuksu090@hotmail.com.<br></br>
             </p>
             <hr></hr>
         </div>

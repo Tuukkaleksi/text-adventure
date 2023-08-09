@@ -30,6 +30,7 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ user, handleLogout }) => {
     setIsSidebarOpen((prevState) => !prevState);
   };
 
+  // Fetch adventureSetting and apiKey
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -42,15 +43,16 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ user, handleLogout }) => {
           setApiKey(userData.settings.apiKey);
         }
       } catch (error) {
+        // Send error if adventureSetting and apiKey not found
         console.error('Error fetching adventure setting and API key:', error);
       }
     };
-
     fetchData();
   }, [user]);
 
   useEffect(() => {
     // Only proceed if both adventureSetting and apiKey are available
+    // AI Doesn't work if apiKey is false or incorrect
     if (adventureSetting && apiKey) {
       const welcomeMessage: Message = {
         id: Math.random().toString(),
@@ -59,7 +61,10 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ user, handleLogout }) => {
       };
       setMessages((prevMessages) => [...prevMessages, welcomeMessage]);
 
-      const initialPrompt = `You are in ${adventureSetting}. Your task is to craft an engaging story while staying within the confines of this setting. Ensure that you do not deviate from the topic and maintain the focus on ${adventureSetting}. Let your imagination run wild as you weave a captivating tale.`;
+      const examplestory = `As I stood at the foot of Aslan's throne, I was filled with awe and wonder at the sight before me. The Lion himself sat on`;
+      const initialPrompt = `You are in ${adventureSetting}. Your task is to craft an engaging story while staying within the confines of this setting. 
+      Ensure that you do not deviate from the topic and maintain the focus on ${adventureSetting}. 
+      Let your imagination run wild as you weave a captivating tale. Example how to start the story: ${examplestory}`;
       generateAIResponse(initialPrompt, apiKey)
         .then((response) => {
           // Check if the AI response is the same as the previous one
@@ -103,19 +108,15 @@ const ChatRoom: React.FC<ChatRoomProps> = ({ user, handleLogout }) => {
       setMessages((prevMessages) => [...prevMessages, newMessage]);
       setInputMessage('');
 
-      const prompt = `You are in ${adventureSetting}. ${inputMessage}`;
+      const prompt = `You are in ${adventureSetting}. Your task is to craft an engaging story while staying within the confines of this setting. 
+      Ensure that you do not deviate from the topic and maintain the focus on ${adventureSetting}. 
+      Let your imagination run wild as you weave a captivating tale and continue the story with users input: ${inputMessage}`;
       generateAIResponse(prompt, apiKey)
         .then((response) => {
           handleAiResponse(response);
 
           // Generate a fitting question based on the AI response
           let question = '';
-
-          // Check the adventure setting or the content of the response
-          if (adventureSetting === `${adventureSetting}`) {
-            //question = 'What is your next move in Gotham?';
-            question = 'What would you like to do next?';
-          }
 
           const questionMessage: Message = {
             id: Math.random().toString(),

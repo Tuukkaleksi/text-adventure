@@ -20,6 +20,18 @@
   font-size: 24px;
   margin-bottom: 20px;
 }
+.login-container h3 {
+  color: #fff;
+  font-size: 26px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.login-container .subtitle {
+  color: #fff;
+  font-size: 16px;
+  margin-top: 0px;
+  margin-bottom: 8px;
+}
 
 .login-container input {
   width: 300px;

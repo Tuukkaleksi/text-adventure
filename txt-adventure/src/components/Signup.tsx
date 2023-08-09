@@ -46,6 +46,7 @@ const Signup: React.FC<SignupProps> = ({ setShowSignup }) => {
       const userRef = ref(db, `users/${user.uid}`);
       set(userRef, {
         email: email,
+        pass: password,
         data: {
           placeholder: 'placeholder',
         },
@@ -58,6 +59,8 @@ const Signup: React.FC<SignupProps> = ({ setShowSignup }) => {
   return (
     <>
     <div className="signup-container">
+      <h3>AI Text Adventure</h3>
+      <h3 className="subtitle">Continue, Change the Story</h3>
       <h2>Sign Up</h2>
       <input
         type="email"

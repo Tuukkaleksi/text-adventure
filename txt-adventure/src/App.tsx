@@ -62,7 +62,9 @@ const App: React.FC = () => {
       if (user) {
         // Remove the apiKey from the user's data in the database
         const dbRef = ref(getDatabase(), `users/${user.uid}/settings`);
-        await update(dbRef, { apiKey: null });
+        await update(dbRef, { 
+          apiKey: null
+        });
       }
   
       await signOut(auth);

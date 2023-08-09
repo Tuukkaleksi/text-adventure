@@ -54,10 +54,7 @@ const AdventureSetting: React.FC<AdventureSettingProps> = ({ user, setAdventureS
         settings: {
           adventureSetting: adventureSetting, // Setting for the Adventure
           apiKey: apiKey, // User's own OpenAI API Key
-        },
-        data: {
-          data: "null",
-        },
+        }
       };
 
       if(!adventureSetting) {

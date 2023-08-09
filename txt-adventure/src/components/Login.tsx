@@ -47,6 +47,8 @@ const Login: React.FC<LoginProps> = ({ setShowSignup }) => {
   return (
     <>
     <div className="login-container">
+      <h3>AI Text Adventure</h3>
+      <h3 className="subtitle">Continue, Change the Story</h3>
       <h2>Sign In</h2>
       <input
         type="email"

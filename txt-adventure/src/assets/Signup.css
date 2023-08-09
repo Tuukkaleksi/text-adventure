@@ -20,6 +20,18 @@
     font-size: 24px;
     margin-bottom: 20px;
 }
+.signup-container h3 {
+    color: #fff;
+    font-size: 26px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+.signup-container .subtitle {
+    color: #fff;
+    font-size: 16px;
+    margin-top: 0px;
+    margin-bottom: 8px;
+  }
   
 .signup-container  input {
     width: 300px;
